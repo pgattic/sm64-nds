@@ -47,4 +47,9 @@ docker build -t sm64ds .
 docker run --rm --mount type=bind,source="$(pwd)",destination=/sm64 sm64ds make VERSION=us -j8
 ```
 
+You can also build with Nix (only `x86_64-linux` supported currently):
+```
+nix build .#sm64-nds --override-input baserom-us path:"$PWD/baserom.us.z64"
+```
+
 If the Build fails, make sure the Docker App is running in the background by opening it and try again.

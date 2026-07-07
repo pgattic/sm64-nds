@@ -1,0 +1,7 @@
+{
+  "imageName": "devkitpro/devkitarm",
+  "imageDigest": "sha256:c582c1e1e0c72649ea51fcc22ff5f8e5d7565d90fecbc862ce214b9e47f6087a",
+  "hash": "sha256-lrBApLaS7nOaecg2ixxJ1Ghvoqf+nM8dFnQQm6KfDZQ=",
+  "finalImageName": "devkitpro/devkitarm",
+  "finalImageTag": "20240511"
+}
