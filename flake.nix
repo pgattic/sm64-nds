@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     devkitNix.url = "github:bandithedoge/devkitNix";
 
     baserom-us = {
@@ -16,11 +16,11 @@
     {
       self,
       nixpkgs,
-      flake-utils,
+      flake-parts,
       devkitNix,
       baserom-us,
       ...
-    }:
+    } @ inputs:
     let
       buildSystem = "x86_64-linux";
 
@@ -91,21 +91,20 @@
         '';
       };
 
-      exposedSystems = flake-utils.lib.defaultSystems;
-
-      packagesForBuildSystem = {
-        default = sm64-nds;
-        sm64-nds = sm64-nds;
-      };
     in
-    {
-      packages = builtins.listToAttrs (
-        map (system: {
-          name = system;
-          value = packagesForBuildSystem;
-        }) (builtins.filter (system: system != buildSystem) exposedSystems)
-      ) // {
-        ${buildSystem} = packagesForBuildSystem;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+
+      perSystem = {
+        packages = {
+          default = sm64-nds;
+          sm64-nds = sm64-nds;
+        };
       };
     };
 }
